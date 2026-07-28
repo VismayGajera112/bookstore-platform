@@ -1,0 +1,7 @@
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/service/ProcessedEventGuard.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/listener/OrderEventListener.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/AnalyticsApplication.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/event/OrderPlacedEvent.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/repository/ProcessedEventRepository.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/config/KafkaConsumerConfig.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/src/main/java/com/example/analytics/entity/ProcessedEvent.java

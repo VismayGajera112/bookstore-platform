@@ -12,6 +12,10 @@ bookstore:
     message: "config loaded from config-server (v1)"
 
 spring:
+  kafka:
+    # Shared by every producer and consumer; per-service files add the (de)serializer and
+    # consumer-group settings that only make sense on one side of the wire.
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
   jpa:
     open-in-view: false
     hibernate:

@@ -1,0 +1,237 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-07-28T11:03:19.211-04:00  INFO 42815 --- [analytics-service] [           main] c.e.analytics.AnalyticsApplication       : Starting AnalyticsApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 42815 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/analytics-service/target/analytics-service-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
+2026-07-28T11:03:19.213-04:00  INFO 42815 --- [analytics-service] [           main] c.e.analytics.AnalyticsApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-28T11:03:19.237-04:00  INFO 42815 --- [analytics-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2026-07-28T11:03:19.237-04:00  INFO 42815 --- [analytics-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=analytics-service, profiles=[default], label=null, version=null, state=null
+2026-07-28T11:03:20.777-04:00  INFO 42815 --- [analytics-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-28T11:03:20.860-04:00  INFO 42815 --- [analytics-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 1 JPA repository interface.
+2026-07-28T11:03:21.213-04:00  INFO 42815 --- [analytics-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=084eef9c-4853-3f40-8a5f-fe49876bb967
+2026-07-28T11:03:22.169-04:00  INFO 42815 --- [analytics-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8086 (http)
+2026-07-28T11:03:22.174-04:00  INFO 42815 --- [analytics-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-28T11:03:22.175-04:00  INFO 42815 --- [analytics-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-07-28T11:03:22.297-04:00  INFO 42815 --- [analytics-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-28T11:03:22.301-04:00  INFO 42815 --- [analytics-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3056 ms
+2026-07-28T11:03:22.680-04:00  INFO 42815 --- [analytics-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-28T11:03:23.078-04:00  INFO 42815 --- [analytics-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5a7a6d34
+2026-07-28T11:03:23.080-04:00  INFO 42815 --- [analytics-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-28T11:03:23.318-04:00  INFO 42815 --- [analytics-service] [           main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 9.22.3 by Redgate
+2026-07-28T11:03:23.318-04:00  INFO 42815 --- [analytics-service] [           main] o.f.c.internal.license.VersionPrinter    : See release notes here: https://rd.gt/416ObMi
+2026-07-28T11:03:23.318-04:00  INFO 42815 --- [analytics-service] [           main] o.f.c.internal.license.VersionPrinter    : 
+2026-07-28T11:03:23.337-04:00  INFO 42815 --- [analytics-service] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:5438/analytics_db (PostgreSQL 15.18)
+2026-07-28T11:03:23.394-04:00  INFO 42815 --- [analytics-service] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.030s)
+2026-07-28T11:03:23.412-04:00  INFO 42815 --- [analytics-service] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+2026-07-28T11:03:23.415-04:00  INFO 42815 --- [analytics-service] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-07-28T11:03:23.603-04:00  INFO 42815 --- [analytics-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-28T11:03:23.646-04:00  INFO 42815 --- [analytics-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-07-28T11:03:23.706-04:00  INFO 42815 --- [analytics-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-28T11:03:23.862-04:00  INFO 42815 --- [analytics-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-28T11:03:25.169-04:00  INFO 42815 --- [analytics-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-28T11:03:25.249-04:00  INFO 42815 --- [analytics-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-28T11:03:27.083-04:00  INFO 42815 --- [analytics-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-07-28T11:03:27.210-04:00  INFO 42815 --- [analytics-service] [           main] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values: 
+	auto.include.jmx.reporter = true
+	bootstrap.servers = [localhost:9092]
+	client.dns.lookup = use_all_dns_ips
+	client.id = 
+	connections.max.idle.ms = 300000
+	default.api.timeout.ms = 60000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2026-07-28T11:03:27.397-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.2
+2026-07-28T11:03:27.397-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: c4deed513057c94e
+2026-07-28T11:03:27.397-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1785251007396
+2026-07-28T11:03:27.668-04:00  INFO 42815 --- [analytics-service] [| adminclient-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-1 unregistered
+2026-07-28T11:03:27.672-04:00  INFO 42815 --- [analytics-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-07-28T11:03:27.673-04:00  INFO 42815 --- [analytics-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-07-28T11:03:27.673-04:00  INFO 42815 --- [analytics-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-07-28T11:03:27.689-04:00  INFO 42815 --- [analytics-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8086 (http) with context path ''
+2026-07-28T11:03:27.709-04:00  INFO 42815 --- [analytics-service] [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-analytics-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = analytics
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_committed
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+
+2026-07-28T11:03:27.744-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.2
+2026-07-28T11:03:27.744-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: c4deed513057c94e
+2026-07-28T11:03:27.744-04:00  INFO 42815 --- [analytics-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1785251007744
+2026-07-28T11:03:27.753-04:00  INFO 42815 --- [analytics-service] [           main] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-analytics-1, groupId=analytics] Subscribed to topic(s): order-placed
+2026-07-28T11:03:27.769-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-analytics-1, groupId=analytics] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-07-28T11:03:27.769-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Discovered group coordinator localhost:9092 (id: 2147483646 rack: null)
+2026-07-28T11:03:27.771-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] (Re-)joining group
+2026-07-28T11:03:27.785-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Request joining group due to: need to re-join with the given member-id: consumer-analytics-1-3b1aa301-e433-4a35-9236-bf532c8bc787
+2026-07-28T11:03:27.786-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-07-28T11:03:27.786-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] (Re-)joining group
+2026-07-28T11:03:27.795-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Successfully joined group with generation Generation{generationId=3, memberId='consumer-analytics-1-3b1aa301-e433-4a35-9236-bf532c8bc787', protocol='range'}
+2026-07-28T11:03:27.799-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Finished assignment for group at generation 3: {consumer-analytics-1-3b1aa301-e433-4a35-9236-bf532c8bc787=Assignment(partitions=[order-placed-0, order-placed-1, order-placed-2])}
+2026-07-28T11:03:27.806-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Successfully synced group in generation Generation{generationId=3, memberId='consumer-analytics-1-3b1aa301-e433-4a35-9236-bf532c8bc787', protocol='range'}
+2026-07-28T11:03:27.807-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Notifying assignor about the new Assignment(partitions=[order-placed-0, order-placed-1, order-placed-2])
+2026-07-28T11:03:27.807-04:00  INFO 42815 --- [analytics-service] [           main] c.e.analytics.AnalyticsApplication       : Started AnalyticsApplication in 10.752 seconds (process running for 11.685)
+2026-07-28T11:03:27.808-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Adding newly assigned partitions: order-placed-0, order-placed-1, order-placed-2
+2026-07-28T11:03:27.832-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Found no committed offset for partition order-placed-2
+2026-07-28T11:03:27.832-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Found no committed offset for partition order-placed-1
+2026-07-28T11:03:27.832-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-analytics-1, groupId=analytics] Found no committed offset for partition order-placed-0
+2026-07-28T11:03:27.846-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-analytics-1, groupId=analytics] Resetting offset for partition order-placed-2 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}.
+2026-07-28T11:03:27.846-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-analytics-1, groupId=analytics] Resetting offset for partition order-placed-1 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}.
+2026-07-28T11:03:27.846-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-analytics-1, groupId=analytics] Resetting offset for partition order-placed-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}.
+2026-07-28T11:03:27.846-04:00  INFO 42815 --- [analytics-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : analytics: partitions assigned: [order-placed-0, order-placed-1, order-placed-2]
+2026-07-28T11:03:34.158-04:00  INFO 42815 --- [analytics-service] [nio-8086-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-28T11:03:34.159-04:00  INFO 42815 --- [analytics-service] [nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-28T11:03:34.160-04:00  INFO 42815 --- [analytics-service] [nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

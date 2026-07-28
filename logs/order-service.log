@@ -7,51 +7,125 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.5)
 
-2026-07-28T10:32:12.251-04:00  INFO 38955 --- [order-service] [           main] c.example.order.OrderServiceApplication  : Starting OrderServiceApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 38955 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/order-service/target/order-service-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
-2026-07-28T10:32:12.257-04:00  INFO 38955 --- [order-service] [           main] c.example.order.OrderServiceApplication  : No active profile set, falling back to 1 default profile: "default"
-2026-07-28T10:32:12.296-04:00  INFO 38955 --- [order-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
-2026-07-28T10:32:12.296-04:00  INFO 38955 --- [order-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=order-service, profiles=[default], label=null, version=null, state=null
-2026-07-28T10:32:13.728-04:00  INFO 38955 --- [order-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-07-28T10:32:13.766-04:00  INFO 38955 --- [order-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interface.
-2026-07-28T10:32:14.416-04:00  INFO 38955 --- [order-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=01b270aa-0ef2-3332-847b-47bc065fa55c
-2026-07-28T10:32:14.420-04:00  WARN 38955 --- [order-service] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'com.example.order.client.BookClient' defined in null: Could not resolve placeholder 'bookstore.clients.book-service.url' in value "http://${bookstore.clients.book-service.url}"
-2026-07-28T10:32:14.494-04:00  INFO 38955 --- [order-service] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-07-28T11:03:19.762-04:00  INFO 42800 --- [order-service] [           main] c.example.order.OrderServiceApplication  : Starting OrderServiceApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 42800 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/order-service/target/order-service-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
+2026-07-28T11:03:19.764-04:00  INFO 42800 --- [order-service] [           main] c.example.order.OrderServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-07-28T11:03:19.799-04:00  INFO 42800 --- [order-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2026-07-28T11:03:19.799-04:00  INFO 42800 --- [order-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=order-service, profiles=[default], label=null, version=null, state=null
+2026-07-28T11:03:22.225-04:00  INFO 42800 --- [order-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-28T11:03:22.266-04:00  INFO 42800 --- [order-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interface.
+2026-07-28T11:03:23.158-04:00  INFO 42800 --- [order-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=145ea03d-b543-3500-86f9-d257e9a6a033
+2026-07-28T11:03:24.749-04:00  INFO 42800 --- [order-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8083 (http)
+2026-07-28T11:03:24.760-04:00  INFO 42800 --- [order-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-28T11:03:24.761-04:00  INFO 42800 --- [order-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-07-28T11:03:24.903-04:00  INFO 42800 --- [order-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-28T11:03:24.904-04:00  INFO 42800 --- [order-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5102 ms
+2026-07-28T11:03:26.029-04:00  INFO 42800 --- [order-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-28T11:03:26.275-04:00  INFO 42800 --- [order-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b240276
+2026-07-28T11:03:26.276-04:00  INFO 42800 --- [order-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-28T11:03:26.499-04:00  INFO 42800 --- [order-service] [           main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 9.22.3 by Redgate
+2026-07-28T11:03:26.499-04:00  INFO 42800 --- [order-service] [           main] o.f.c.internal.license.VersionPrinter    : See release notes here: https://rd.gt/416ObMi
+2026-07-28T11:03:26.499-04:00  INFO 42800 --- [order-service] [           main] o.f.c.internal.license.VersionPrinter    : 
+2026-07-28T11:03:26.517-04:00  INFO 42800 --- [order-service] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:5435/order_db (PostgreSQL 15.18)
+2026-07-28T11:03:26.630-04:00  INFO 42800 --- [order-service] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.094s)
+2026-07-28T11:03:26.652-04:00  INFO 42800 --- [order-service] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+2026-07-28T11:03:26.655-04:00  INFO 42800 --- [order-service] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-07-28T11:03:26.930-04:00  INFO 42800 --- [order-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-28T11:03:27.017-04:00  INFO 42800 --- [order-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-07-28T11:03:27.056-04:00  INFO 42800 --- [order-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-28T11:03:27.366-04:00  INFO 42800 --- [order-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-28T11:03:28.926-04:00  INFO 42800 --- [order-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-28T11:03:28.988-04:00  INFO 42800 --- [order-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-28T11:03:30.085-04:00  INFO 42800 --- [order-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-28T11:03:31.177-04:00  WARN 42800 --- [order-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-07-28T10:32:14.508-04:00 ERROR 38955 --- [order-service] [           main] o.s.boot.SpringApplication               : Application run failed
+Using generated security password: aa4eb05c-9c70-47af-9bfa-fa10cb018f79
 
-org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'com.example.order.client.BookClient' defined in null: Could not resolve placeholder 'bookstore.clients.book-service.url' in value "http://${bookstore.clients.book-service.url}"
-	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:230) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.processProperties(PropertySourcesPlaceholderConfigurer.java:207) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.postProcessBeanFactory(PropertySourcesPlaceholderConfigurer.java:173) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:189) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:788) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:606) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.5.jar!/:3.2.5]
-	at com.example.order.OrderServiceApplication.main(OrderServiceApplication.java:19) ~[!/:1.0.0-SNAPSHOT]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
-	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:91) ~[order-service-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
-	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:53) ~[order-service-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
-	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:58) ~[order-service-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
-Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'bookstore.clients.book-service.url' in value "http://${bookstore.clients.book-service.url}"
-	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.6.jar!/:6.1.6]
-	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.6.jar!/:6.1.6]
-	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.6.jar!/:6.1.6]
-	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.6.jar!/:6.1.6]
-	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.6.jar!/:6.1.6]
-	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveStringValue(BeanDefinitionVisitor.java:293) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveValue(BeanDefinitionVisitor.java:219) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitPropertyValues(BeanDefinitionVisitor.java:147) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitBeanDefinition(BeanDefinitionVisitor.java:85) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:227) ~[spring-beans-6.1.6.jar!/:6.1.6]
-	... 20 common frames omitted
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
+2026-07-28T11:03:31.616-04:00  INFO 42800 --- [order-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 8 endpoint(s) beneath base path '/actuator'
+2026-07-28T11:03:31.717-04:00  INFO 42800 --- [order-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7caf0725, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@644acaff, org.springframework.security.web.context.SecurityContextHolderFilter@64f578eb, org.springframework.security.web.header.HeaderWriterFilter@253dbbc8, org.springframework.web.filter.CorsFilter@6241ef96, org.springframework.security.web.authentication.logout.LogoutFilter@cfc9c4f, com.example.common.security.JwtAuthenticationFilter@2ed7978c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f3964b0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7540aa55, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5865b0f6, org.springframework.security.web.session.SessionManagementFilter@6e32eea5, org.springframework.security.web.access.ExceptionTranslationFilter@469c1292, org.springframework.security.web.access.intercept.AuthorizationFilter@3d7c21b7]
+2026-07-28T11:03:32.572-04:00  INFO 42800 --- [order-service] [           main] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values: 
+	auto.include.jmx.reporter = true
+	bootstrap.servers = [localhost:9092]
+	client.dns.lookup = use_all_dns_ips
+	client.id = 
+	connections.max.idle.ms = 300000
+	default.api.timeout.ms = 60000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2026-07-28T11:03:32.642-04:00  INFO 42800 --- [order-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.2
+2026-07-28T11:03:32.642-04:00  INFO 42800 --- [order-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: c4deed513057c94e
+2026-07-28T11:03:32.642-04:00  INFO 42800 --- [order-service] [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1785251012641
+2026-07-28T11:03:32.866-04:00  INFO 42800 --- [order-service] [| adminclient-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-1 unregistered
+2026-07-28T11:03:32.869-04:00  INFO 42800 --- [order-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-07-28T11:03:32.869-04:00  INFO 42800 --- [order-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-07-28T11:03:32.869-04:00  INFO 42800 --- [order-service] [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-07-28T11:03:32.884-04:00  INFO 42800 --- [order-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8083 (http) with context path ''
+2026-07-28T11:03:32.912-04:00  INFO 42800 --- [order-service] [           main] c.example.order.OrderServiceApplication  : Started OrderServiceApplication in 15.875 seconds (process running for 16.806)
+2026-07-28T11:03:32.924-04:00  INFO 42800 --- [order-service] [   scheduling-1] com.example.common.aop.LoggingAspect     : -> StockReleaseRetryJob.retryPendingReleases args=[]
+2026-07-28T11:03:32.983-04:00  INFO 42800 --- [order-service] [   scheduling-1] com.example.common.aop.LoggingAspect     : <- StockReleaseRetryJob.retryPendingReleases completed in 58 ms
+2026-07-28T11:03:33.849-04:00  INFO 42800 --- [order-service] [nio-8083-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-28T11:03:33.849-04:00  INFO 42800 --- [order-service] [nio-8083-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-28T11:03:33.850-04:00  INFO 42800 --- [order-service] [nio-8083-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

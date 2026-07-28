@@ -1,5 +1,6 @@
-# Database-per-service: four independent PostgreSQL instances, one per service.
-# Nothing is shared — no common tables, no cross-database queries, no cross-service foreign keys.
+# Database-per-service: six independent PostgreSQL instances, one per service, plus a single-node
+# Kafka broker (KRaft, no ZooKeeper) shared by every producer/consumer. Nothing is shared between the
+# databases — no common tables, no cross-database queries, no cross-service foreign keys.
 services:
   user-db:
     image: postgres:15-alpine
@@ -69,8 +70,91 @@ services:
       timeout: 3s
       retries: 10
 
+  notification-db:
+    image: postgres:15-alpine
+    container_name: bookstore-notification-db
+    environment:
+      POSTGRES_DB: notification_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5437:5432"
+    volumes:
+      - notification-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d notification_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  analytics-db:
+    image: postgres:15-alpine
+    container_name: bookstore-analytics-db
+    environment:
+      POSTGRES_DB: analytics_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5438:5432"
+    volumes:
+      - analytics-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d analytics_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Single-node Kafka in KRaft mode (no ZooKeeper). Two listeners: PLAINTEXT for host processes
+  # (order-service, payment-service, notification-service, analytics-service all run as plain `java -jar`
+  # on the host, per the existing platform convention) and PLAINTEXT_INTERNAL for other containers on
+  # this compose network, such as kafka-ui below.
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: bookstore-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+      start_period: 20s
+
+  # Optional but handy while developing: browse topics, partitions, consumer groups and lag,
+  # including the *.DLT dead-letter topics, at http://localhost:8090.
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: bookstore-kafka-ui
+    depends_on:
+      - kafka
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+
 volumes:
   user-pgdata:
   book-pgdata:
   order-pgdata:
   payment-pgdata:
+  notification-pgdata:
+  analytics-pgdata:
+  kafka-data:

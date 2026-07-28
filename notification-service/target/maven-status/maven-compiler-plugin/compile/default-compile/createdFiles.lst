@@ -1,0 +1,9 @@
+com/example/notification/entity/ProcessedEvent.class
+com/example/notification/event/OrderPlacedEvent.class
+com/example/notification/NotificationApplication.class
+com/example/notification/listener/OrderEventListener.class
+com/example/notification/event/OrderPlacedEvent$Item.class
+com/example/notification/repository/ProcessedEventRepository.class
+com/example/notification/monitor/DlqDepthMonitor.class
+com/example/notification/config/KafkaConsumerConfig.class
+com/example/notification/service/ProcessedEventGuard.class

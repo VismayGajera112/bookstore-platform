@@ -1,0 +1,8 @@
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/event/OrderPlacedEvent.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/config/KafkaConsumerConfig.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/NotificationApplication.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/listener/OrderEventListener.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/entity/ProcessedEvent.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/monitor/DlqDepthMonitor.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/repository/ProcessedEventRepository.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/notification-service/src/main/java/com/example/notification/service/ProcessedEventGuard.java

@@ -1,0 +1,8 @@
+com/example/analytics/repository/ProcessedEventRepository.class
+com/example/analytics/entity/ProcessedEvent.class
+com/example/analytics/config/KafkaConsumerConfig.class
+com/example/analytics/AnalyticsApplication.class
+com/example/analytics/event/OrderPlacedEvent.class
+com/example/analytics/listener/OrderEventListener.class
+com/example/analytics/event/OrderPlacedEvent$Item.class
+com/example/analytics/service/ProcessedEventGuard.class

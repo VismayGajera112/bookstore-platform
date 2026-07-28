@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Starts config-server first, then the four domain services.
+# Starts config-server first, then all domain/event services.
 # Usage (from bookstore-platform):  source scripts/dev-env.sh && scripts/run-all.sh
 set -euo pipefail
 
@@ -13,7 +13,7 @@ source "$ROOT/scripts/dev-env.sh"
 
 echo "Ensuring per-service PostgreSQL databases are up..."
 docker compose up -d
-for db in user-db book-db order-db payment-db; do
+for db in user-db book-db order-db payment-db notification-db analytics-db; do
   for _ in $(seq 1 30); do
     if docker compose exec -T "$db" pg_isready -U postgres >/dev/null 2>&1; then
       echo "$db is ready"
@@ -64,12 +64,22 @@ start user-service
 start book-service
 start order-service
 start payment-service
+start notification-service
+start analytics-service
 
 wait_healthy user-service 8081
 wait_healthy book-service 8082
 wait_healthy order-service 8083
 wait_healthy payment-service 8084
+wait_healthy notification-service 8085
+wait_healthy analytics-service 8086
+
+# Gateway starts last — it proxies to the services above.
+start api-gateway
+wait_healthy api-gateway 8080
 
 echo
-echo "Config Server serving:  curl -s $CONFIG_SERVER_URL/user-service/default | head"
-echo "Demo property:          curl -s localhost:8081/api/config/demo"
+echo "API Gateway (front door): http://localhost:8080"
+echo "Config Server serving:    curl -s $CONFIG_SERVER_URL/user-service/default | head"
+echo "Demo property:            curl -s localhost:8080/api/config/demo -H 'Authorization: Bearer \$TOKEN'"
+echo "Kafka UI:                 http://localhost:8090"

@@ -4,6 +4,15 @@ server:
 spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5435/order_db}
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      properties:
+        # Consumers own their event classes; do not leak this producer's package layout to them.
+        spring.json.add.type.headers: false
+        enable.idempotence: true
   cloud:
     openfeign:
       client:
@@ -20,6 +29,11 @@ bookstore:
       url: ${BOOK_SERVICE_URL:http://localhost:8082}
   saga:
     stock-release-retry-interval: ${STOCK_RELEASE_RETRY_INTERVAL:30000}
+
+app:
+  kafka:
+    topics:
+      order-placed: order-placed
 
 resilience4j:
   circuitbreaker:

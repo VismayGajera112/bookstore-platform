@@ -7,14 +7,30 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.5)
 
-2026-07-28T10:33:44.876-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Starting ConfigServerApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 39226 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/config-server/target/config-server-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
-2026-07-28T10:33:44.879-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : The following 1 profile is active: "native"
-2026-07-28T10:33:45.430-04:00  INFO 39226 --- [config-server] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=efaa556a-801e-33ac-a6e3-fac140a4f246
-2026-07-28T10:33:45.549-04:00  INFO 39226 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
-2026-07-28T10:33:45.554-04:00  INFO 39226 --- [config-server] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-07-28T10:33:45.554-04:00  INFO 39226 --- [config-server] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2026-07-28T10:33:45.572-04:00  INFO 39226 --- [config-server] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-07-28T10:33:45.572-04:00  INFO 39226 --- [config-server] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 647 ms
-2026-07-28T10:33:45.965-04:00  INFO 39226 --- [config-server] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
-2026-07-28T10:33:45.997-04:00  INFO 39226 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path ''
-2026-07-28T10:33:46.020-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Started ConfigServerApplication in 1.427 seconds (process running for 1.667)
+2026-07-28T11:03:14.469-04:00  INFO 42774 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Starting ConfigServerApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 42774 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/config-server/target/config-server-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
+2026-07-28T11:03:14.472-04:00  INFO 42774 --- [config-server] [           main] c.e.config.ConfigServerApplication       : The following 1 profile is active: "native"
+2026-07-28T11:03:15.018-04:00  INFO 42774 --- [config-server] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=efaa556a-801e-33ac-a6e3-fac140a4f246
+2026-07-28T11:03:15.153-04:00  INFO 42774 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2026-07-28T11:03:15.158-04:00  INFO 42774 --- [config-server] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-28T11:03:15.158-04:00  INFO 42774 --- [config-server] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-07-28T11:03:15.178-04:00  INFO 42774 --- [config-server] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-28T11:03:15.179-04:00  INFO 42774 --- [config-server] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 665 ms
+2026-07-28T11:03:15.562-04:00  INFO 42774 --- [config-server] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-07-28T11:03:15.588-04:00  INFO 42774 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path ''
+2026-07-28T11:03:15.608-04:00  INFO 42774 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Started ConfigServerApplication in 1.43 seconds (process running for 1.666)
+2026-07-28T11:03:16.002-04:00  INFO 42774 --- [config-server] [nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-28T11:03:16.003-04:00  INFO 42774 --- [config-server] [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-28T11:03:16.003-04:00  INFO 42774 --- [config-server] [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-07-28T11:03:16.039-04:00  INFO 42774 --- [config-server] [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.732-04:00  INFO 42774 --- [config-server] [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/user-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.733-04:00  INFO 42774 --- [config-server] [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.747-04:00  INFO 42774 --- [config-server] [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/analytics-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.747-04:00  INFO 42774 --- [config-server] [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.776-04:00  INFO 42774 --- [config-server] [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/notification-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:18.776-04:00  INFO 42774 --- [config-server] [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.001-04:00  INFO 42774 --- [config-server] [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/order-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.001-04:00  INFO 42774 --- [config-server] [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.038-04:00  INFO 42774 --- [config-server] [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/book-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.038-04:00  INFO 42774 --- [config-server] [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.158-04:00  INFO 42774 --- [config-server] [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/payment-service.yml]' via location 'file:./config-repo/'
+2026-07-28T11:03:19.158-04:00  INFO 42774 --- [config-server] [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [config-repo/application.yml]' via location 'file:./config-repo/'

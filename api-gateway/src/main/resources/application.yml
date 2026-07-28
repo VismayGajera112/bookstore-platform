@@ -1,0 +1,6 @@
+# Bootstrap only. Routes, CORS and JWT settings come from config-server (config-repo/api-gateway.yml).
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: "configserver:${CONFIG_SERVER_URL:http://localhost:8888}"

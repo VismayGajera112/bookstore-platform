@@ -1,4 +1,5 @@
 com/example/order/controller/OrderController.class
+com/example/order/event/OrderPlacedEvent.class
 com/example/order/exception/CatalogUnavailableException.class
 com/example/order/client/dto/BookAvailability.class
 com/example/order/dto/PaymentResultRequest$Status.class
@@ -18,6 +19,7 @@ com/example/order/entity/Order$OrderBuilder.class
 com/example/order/client/dto/StockReservationResponse.class
 com/example/order/dto/PaymentResultRequest.class
 com/example/order/dto/OrderResponse.class
+com/example/order/event/OrderPlacedEvent$Item.class
 com/example/order/security/SecurityConfig.class
 com/example/order/config/ServiceTokenProvider.class
 com/example/order/service/OrderStateWriter.class
@@ -27,6 +29,7 @@ com/example/order/config/ResilienceConfig.class
 com/example/order/client/dto/StockReservationRequest.class
 com/example/order/client/dto/StockReservationResponse$Line.class
 com/example/order/entity/OrderItem$OrderItemBuilder.class
+com/example/order/config/KafkaTopicConfig.class
 com/example/order/service/OrderServiceImpl.class
 com/example/order/dto/OrderItemResponse.class
 com/example/order/OrderServiceApplication.class
