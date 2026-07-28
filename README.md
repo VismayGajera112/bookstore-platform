@@ -177,9 +177,24 @@ curl localhost:8083/api/orders/$ORDER_ID -H "Authorization: Bearer $TOKEN"
 
 ## What this step deliberately leaves for later
 
-- **Kafka / outbox** for `OrderPlaced` and `PaymentCompleted` (Step 7)
-- **API Gateway + Config Server** (later steps)
 - **Refunds** so a PAID order can be cancelled cleanly
 - **Dockerfiles / K8s** (Step 10)
 - Automated tests under `bookstore-platform/**/src/test` (the monolith suite still covers the
   earlier layers; platform smoke is currently curl-driven)
+
+## Step 9 — S3 / Lambda / DynamoDB
+
+See [docs/step-9-file-processing.md](docs/step-9-file-processing.md) for cover upload (S3 → Lambda →
+DynamoDB → SNS) and user browsing history. LocalStack is included in `docker-compose.yml`.
+
+## Step 10 — Containers & Kubernetes
+
+Each service has a multi-stage `Dockerfile`. Full stack:
+
+```bash
+docker compose up -d --build    # DBs + Kafka + LocalStack + all services + gateway
+curl -fsS http://localhost:8080/actuator/health
+```
+
+Kubernetes manifests live under `k8s/` (Deployments, Services, ConfigMap, Secret, probes, gateway HPA).
+See [docs/step-10-kubernetes.md](docs/step-10-kubernetes.md) for minikube/kind usage and the EKS + IRSA design note.

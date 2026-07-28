@@ -1,0 +1,18 @@
+# Non-sensitive platform defaults. Override per-environment with Kustomize / Helm in real clusters.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bookstore-config
+  namespace: bookstore
+data:
+  CONFIG_SERVER_URL: "http://config-server:8888"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  JWT_EXPIRATION: "1h"
+  AWS_REGION: "us-east-1"
+  COVER_BUCKET: "bookstore-covers"
+  COVER_METADATA_TABLE: "CoverMetadata"
+  BROWSING_HISTORY_TABLE: "UserBrowsingHistory"
+  ADMIN_USERNAME: "admin"
+  ADMIN_EMAIL: "admin@bookstore.local"
+  ADMIN_BOOTSTRAP_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS: "file:/config-repo"

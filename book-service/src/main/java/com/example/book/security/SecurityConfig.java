@@ -42,9 +42,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Catalog reads are public; /availability is excluded because it is a
-                        // service-to-service call that must carry the customer's identity.
+                        // Catalog reads are public; /availability and /me/history need a token.
                         .requestMatchers(HttpMethod.GET, "/api/books/availability").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/books/me/history").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/books/**", "/api/authors/**").permitAll()
                         .requestMatchers("/api/config/demo").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/books/reservations/**").authenticated()

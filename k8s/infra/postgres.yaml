@@ -1,0 +1,293 @@
+# Minimal Postgres Deployments for local minikube/kind demos (emptyDir — data is ephemeral).
+# Prefer a managed DB (RDS) or a proper StatefulSet + PVC operator in real environments.
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: user-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: user-db
+      template:
+        metadata:
+          labels:
+            app: user-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: user_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "user_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: user-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: user-db
+      ports:
+        - port: 5432
+          targetPort: 5432
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: book-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: book-db
+      template:
+        metadata:
+          labels:
+            app: book-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: book_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "book_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: book-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: book-db
+      ports:
+        - port: 5432
+          targetPort: 5432
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: order-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: order-db
+      template:
+        metadata:
+          labels:
+            app: order-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: order_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "order_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: order-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: order-db
+      ports:
+        - port: 5432
+          targetPort: 5432
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: payment-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: payment-db
+      template:
+        metadata:
+          labels:
+            app: payment-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: payment_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "payment_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: payment-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: payment-db
+      ports:
+        - port: 5432
+          targetPort: 5432
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: notification-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: notification-db
+      template:
+        metadata:
+          labels:
+            app: notification-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: notification_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "notification_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: notification-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: notification-db
+      ports:
+        - port: 5432
+          targetPort: 5432
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: analytics-db
+      namespace: bookstore
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: analytics-db
+      template:
+        metadata:
+          labels:
+            app: analytics-db
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:15-alpine
+              ports:
+                - containerPort: 5432
+              env:
+                - name: POSTGRES_DB
+                  value: analytics_db
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_USERNAME
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstore-secrets
+                      key: DB_PASSWORD
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "postgres", "-d", "analytics_db"]
+                periodSeconds: 5
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: analytics-db
+      namespace: bookstore
+    spec:
+      selector:
+        app: analytics-db
+      ports:
+        - port: 5432
+          targetPort: 5432

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: bookstore
+  labels:
+    app: payment-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: bookstore/payment-service:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8084
+              name: http
+          envFrom:
+            - configMapRef:
+                name: bookstore-config
+            - secretRef:
+                name: bookstore-secrets
+          env:
+            - name: DB_URL
+              value: jdbc:postgresql://payment-db:5432/payment_db
+            - name: ORDER_SERVICE_URL
+              value: http://order-service:8083
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 768Mi

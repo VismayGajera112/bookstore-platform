@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-service
+  namespace: bookstore
+  labels:
+    app: book-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: book-service
+  template:
+    metadata:
+      labels:
+        app: book-service
+    spec:
+      containers:
+        - name: book-service
+          image: bookstore/book-service:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+              name: http
+          envFrom:
+            - configMapRef:
+                name: bookstore-config
+            - secretRef:
+                name: bookstore-secrets
+          env:
+            - name: DB_URL
+              value: jdbc:postgresql://book-db:5432/book_db
+            - name: AWS_ENDPOINT_URL
+              value: http://localstack:4566
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 768Mi

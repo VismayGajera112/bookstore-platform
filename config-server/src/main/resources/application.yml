@@ -12,9 +12,9 @@ spring:
     config:
       server:
         native:
-          # Keep config in the platform repo under ./config-repo.
-          # run-all.sh starts this app from the bookstore-platform root, so this relative path is stable.
-          search-locations: file:./config-repo
+          # Local jar runs: ./config-repo from the platform root.
+          # Containers: SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:/config-repo
+          search-locations: ${SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS:file:./config-repo}
 
 management:
   endpoints:
@@ -24,6 +24,8 @@ management:
   endpoint:
     health:
       show-details: always
+      probes:
+        enabled: true
 
 logging:
   level:

@@ -42,6 +42,9 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+      # Exposes /actuator/health/liveness and /readiness for Docker/K8s probes.
+      probes:
+        enabled: true
     refresh:
       # Lets an ADMIN re-pull central config without restarting the process.
       enabled: true

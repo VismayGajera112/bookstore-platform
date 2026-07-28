@@ -117,7 +117,9 @@ public class JwtValidationFilter implements GlobalFilter, Ordered {
             return true;
         }
         if (method == HttpMethod.GET && matchesAny(path, "/api/books/**", "/api/authors/**")
-                && !PATH_MATCHER.match("/api/books/availability", path)) {
+                && !PATH_MATCHER.match("/api/books/availability", path)
+                && !PATH_MATCHER.match("/api/books/me/history", path)
+                && !PATH_MATCHER.match("/api/books/me/history/**", path)) {
             return true;
         }
         return false;

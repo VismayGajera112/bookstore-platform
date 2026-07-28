@@ -28,12 +28,14 @@
         <module>notification-service</module>
         <module>analytics-service</module>
         <module>api-gateway</module>
+        <module>cover-processor</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <jjwt.version>0.12.5</jjwt.version>
+        <aws.sdk.version>2.25.60</aws.sdk.version>
         <testcontainers.version>1.21.3</testcontainers.version>
         <docker.api.version>1.44</docker.api.version>
     </properties>

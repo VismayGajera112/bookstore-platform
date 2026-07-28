@@ -1,0 +1,12 @@
+**/target
+**/.git
+**/.idea
+**/*.iml
+**/logs
+**/pids
+**/.DS_Store
+**/node_modules
+k8s
+docs
+localstack
+*.md

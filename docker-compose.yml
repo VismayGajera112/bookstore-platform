@@ -1,6 +1,19 @@
-# Database-per-service: six independent PostgreSQL instances, one per service, plus a single-node
-# Kafka broker (KRaft, no ZooKeeper) shared by every producer/consumer. Nothing is shared between the
-# databases — no common tables, no cross-database queries, no cross-service foreign keys.
+# Full local stack: six Postgres DBs, Kafka, LocalStack, config-server, all microservices, gateway.
+# Usage (from bookstore-platform/):
+#   docker compose up -d --build
+# Front door: http://localhost:8080
+#
+# Host-side jar runs (scripts/run-all.sh) still work against infra-only via published ports;
+# app containers use Docker DNS names and the Kafka internal listener (kafka:29092).
+
+x-app-env: &app-env
+  CONFIG_SERVER_URL: http://config-server:8888
+  JWT_SECRET: ${JWT_SECRET:-change-me-in-production-this-is-a-dev-only-secret-key-32b}
+  JWT_EXPIRATION: ${JWT_EXPIRATION:-1h}
+  DB_USERNAME: ${DB_USERNAME:-postgres}
+  DB_PASSWORD: ${DB_PASSWORD:-postgres}
+  KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
 services:
   user-db:
     image: postgres:15-alpine
@@ -104,10 +117,7 @@ services:
       timeout: 3s
       retries: 10
 
-  # Single-node Kafka in KRaft mode (no ZooKeeper). Two listeners: PLAINTEXT for host processes
-  # (order-service, payment-service, notification-service, analytics-service all run as plain `java -jar`
-  # on the host, per the existing platform convention) and PLAINTEXT_INTERNAL for other containers on
-  # this compose network, such as kafka-ui below.
+  # Host clients use localhost:9092; containers on this network use kafka:29092.
   kafka:
     image: confluentinc/cp-kafka:7.6.1
     container_name: bookstore-kafka
@@ -137,8 +147,6 @@ services:
       retries: 15
       start_period: 20s
 
-  # Optional but handy while developing: browse topics, partitions, consumer groups and lag,
-  # including the *.DLT dead-letter topics, at http://localhost:8090.
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: bookstore-kafka-ui
@@ -150,6 +158,241 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
 
+  localstack:
+    image: localstack/localstack:3.4
+    container_name: bookstore-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3,dynamodb,sns,sqs,lambda,iam
+      DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_REGION: us-east-1
+      DEBUG: "0"
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - ./localstack/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # --- Application services ---
+
+  config-server:
+    build:
+      context: .
+      dockerfile: config-server/Dockerfile
+    image: bookstore/config-server:1.0.0
+    container_name: bookstore-config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-repo:/config-repo:ro
+    environment:
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS: file:/config-repo
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    image: bookstore/user-service:1.0.0
+    container_name: bookstore-user-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      user-db:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://user-db:5432/user_db
+      ADMIN_BOOTSTRAP_ENABLED: "true"
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@bookstore.local}
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  book-service:
+    build:
+      context: .
+      dockerfile: book-service/Dockerfile
+    image: bookstore/book-service:1.0.0
+    container_name: bookstore-book-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      book-db:
+        condition: service_healthy
+      localstack:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://book-db:5432/book_db
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_ENDPOINT_URL: http://localstack:4566
+      COVER_BUCKET: bookstore-covers
+    ports:
+      - "8082:8082"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  order-service:
+    build:
+      context: .
+      dockerfile: order-service/Dockerfile
+    image: bookstore/order-service:1.0.0
+    container_name: bookstore-order-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      order-db:
+        condition: service_healthy
+      book-service:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://order-db:5432/order_db
+      BOOK_SERVICE_URL: http://book-service:8082
+    ports:
+      - "8083:8083"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8083/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: payment-service/Dockerfile
+    image: bookstore/payment-service:1.0.0
+    container_name: bookstore-payment-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      payment-db:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://payment-db:5432/payment_db
+      ORDER_SERVICE_URL: http://order-service:8083
+    ports:
+      - "8084:8084"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8084/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
+    image: bookstore/notification-service:1.0.0
+    container_name: bookstore-notification-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      notification-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://notification-db:5432/notification_db
+    ports:
+      - "8085:8085"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8085/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  analytics-service:
+    build:
+      context: .
+      dockerfile: analytics-service/Dockerfile
+    image: bookstore/analytics-service:1.0.0
+    container_name: bookstore-analytics-service
+    depends_on:
+      config-server:
+        condition: service_healthy
+      analytics-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      DB_URL: jdbc:postgresql://analytics-db:5432/analytics_db
+    ports:
+      - "8086:8086"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8086/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    image: bookstore/api-gateway:1.0.0
+    container_name: bookstore-api-gateway
+    depends_on:
+      config-server:
+        condition: service_healthy
+      user-service:
+        condition: service_healthy
+      book-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+      payment-service:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      USER_SERVICE_URL: http://user-service:8081
+      BOOK_SERVICE_URL: http://book-service:8082
+      ORDER_SERVICE_URL: http://order-service:8083
+      PAYMENT_SERVICE_URL: http://payment-service:8084
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
 volumes:
   user-pgdata:
   book-pgdata:
@@ -158,3 +401,4 @@ volumes:
   notification-pgdata:
   analytics-pgdata:
   kafka-data:
+  localstack-data:

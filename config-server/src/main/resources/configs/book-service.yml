@@ -14,3 +14,14 @@ bookstore:
   jwt:
     secret: ${JWT_SECRET}
     issuer: bookstore-platform
+  aws:
+    enabled: true
+    region: ${AWS_REGION:us-east-1}
+    endpoint: ${AWS_ENDPOINT_URL:http://localhost:4566}
+    s3:
+      cover-bucket: ${COVER_BUCKET:bookstore-covers}
+      upload-url-expiry-seconds: ${COVER_UPLOAD_URL_EXPIRY_SECONDS:900}
+    dynamodb:
+      cover-metadata-table: ${COVER_METADATA_TABLE:CoverMetadata}
+      browsing-history-table: ${BROWSING_HISTORY_TABLE:UserBrowsingHistory}
+      browsing-history-ttl-days: ${BROWSING_HISTORY_TTL_DAYS:30}

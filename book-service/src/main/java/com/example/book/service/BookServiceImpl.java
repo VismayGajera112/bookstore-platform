@@ -15,6 +15,7 @@ import com.example.common.exception.BusinessRuleException;
 import com.example.common.exception.DuplicateResourceException;
 import com.example.common.exception.InsufficientStockException;
 import com.example.common.exception.ResourceNotFoundException;
+import com.example.common.security.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,13 +41,16 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final StockReservationRepository reservationRepository;
+    private final BrowsingHistoryService browsingHistoryService;
 
     public BookServiceImpl(BookRepository bookRepository,
                            AuthorRepository authorRepository,
-                           StockReservationRepository reservationRepository) {
+                           StockReservationRepository reservationRepository,
+                           BrowsingHistoryService browsingHistoryService) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.reservationRepository = reservationRepository;
+        this.browsingHistoryService = browsingHistoryService;
     }
 
     @Override
@@ -59,8 +63,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse findById(Long id) {
-        return BookResponse.from(bookRepository.findByIdWithAuthor(id)
+        BookResponse response = BookResponse.from(bookRepository.findByIdWithAuthor(id)
                 .orElseThrow(() -> ResourceNotFoundException.of("Book", id)));
+        // Async DynamoDB write — does not block the catalog response.
+        CurrentUser.get().ifPresent(user -> browsingHistoryService.recordViewAsync(user.userId(), id));
+        return response;
     }
 
     /**
