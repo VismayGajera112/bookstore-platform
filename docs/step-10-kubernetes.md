@@ -74,8 +74,17 @@ minikube service api-gateway -n bookstore --url
 
 Probes use Spring Boot 3 health groups (`management.endpoint.health.probes.enabled=true`):
 
-- Readiness: `/actuator/health/readiness`
-- Liveness: `/actuator/health/liveness`
+- **startupProbe**: `/actuator/health/liveness` — up to ~6 minutes for cold JVM boot on a small minikube
+- **readinessProbe**: `/actuator/health/readiness`
+- **livenessProbe**: `/actuator/health/liveness` (only armed after startup succeeds)
+
+App Deployments use `strategy: Recreate` and 1 replica by default so a rolling update does not
+double pod count and starve a single-node cluster. Postgres readiness uses cheap `tcpSocket`
+probes (exec `pg_isready` times out under CPU pressure).
+
+**Kafka gotcha:** a Service named `kafka` injects `KAFKA_PORT` into the pod; Confluent’s image
+treats every `KAFKA_*` env var as broker config and exits. The Kafka Deployment sets
+`enableServiceLinks: false` to prevent that.
 
 ### Challenge — Horizontal Pod Autoscaler
 

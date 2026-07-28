@@ -6,7 +6,9 @@ metadata:
   labels:
     app: user-service
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: user-service
@@ -32,24 +34,32 @@ spec:
               value: jdbc:postgresql://user-db:5432/user_db
             - name: ADMIN_BOOTSTRAP_ENABLED
               value: "true"
+          # startupProbe gives the JVM time to boot before liveness can kill the pod.
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 36
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: http
-            initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5
             failureThreshold: 6
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: http
-            initialDelaySeconds: 60
             periodSeconds: 20
+            timeoutSeconds: 5
             failureThreshold: 3
           resources:
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 50m
+              memory: 192Mi
             limits:
               cpu: "1"
-              memory: 768Mi
+              memory: 512Mi

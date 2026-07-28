@@ -10,6 +10,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: user-db
@@ -37,9 +39,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "user_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
@@ -58,6 +70,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: book-db
@@ -85,9 +99,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "book_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
@@ -106,6 +130,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: order-db
@@ -133,9 +159,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "order_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
@@ -154,6 +190,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: payment-db
@@ -181,9 +219,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "payment_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
@@ -202,6 +250,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: notification-db
@@ -229,9 +279,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "notification_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
@@ -250,6 +310,8 @@ items:
       namespace: bookstore
     spec:
       replicas: 1
+      strategy:
+        type: Recreate
       selector:
         matchLabels:
           app: analytics-db
@@ -277,9 +339,19 @@ items:
                       name: bookstore-secrets
                       key: DB_PASSWORD
               readinessProbe:
-                exec:
-                  command: ["pg_isready", "-U", "postgres", "-d", "analytics_db"]
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 10
                 periodSeconds: 5
+                timeoutSeconds: 3
+                failureThreshold: 12
+              livenessProbe:
+                tcpSocket:
+                  port: 5432
+                initialDelaySeconds: 30
+                periodSeconds: 20
+                timeoutSeconds: 3
+                failureThreshold: 3
   - apiVersion: v1
     kind: Service
     metadata:
