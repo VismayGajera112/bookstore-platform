@@ -1,0 +1,21 @@
+<nav class="nav">
+  <a routerLink="/" class="brand">Bookstore</a>
+  <div class="links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Books</a>
+    <a routerLink="/cart" routerLinkActive="active">
+      Cart
+      @if ((cartCount$ | async) ?? 0; as count) {
+        @if (count > 0) {
+          <span class="badge">{{ count }}</span>
+        }
+      }
+    </a>
+    @if (user$ | async; as user) {
+      <span class="user">{{ user.username }}</span>
+      <button type="button" class="linkish" (click)="logout()">Logout</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+    }
+  </div>
+</nav>

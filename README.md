@@ -207,3 +207,15 @@ See [docs/step-10-kubernetes.md](docs/step-10-kubernetes.md) for minikube/kind u
 - Observability: `docker compose --profile monitoring up -d` → Prometheus `:9090`, Grafana `:3000`
 
 Details: [docs/step-11-cicd-monitoring.md](docs/step-11-cicd-monitoring.md)
+
+## Frontend (Angular)
+
+Simple storefront in [`frontend/`](frontend/) — login/register, catalog, cart, checkout via the API gateway.
+
+```bash
+# gateway must be up on :8080
+cd frontend && npm install && npm start
+# http://localhost:4200
+```
+
+See [frontend/README.md](frontend/README.md).

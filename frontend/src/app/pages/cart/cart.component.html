@@ -1,0 +1,40 @@
+<section>
+  <h1>Cart</h1>
+
+  @if ((items$ | async)?.length === 0) {
+    <p>Your cart is empty. <a routerLink="/">Browse books</a></p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Line</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items$ | async; track item.bookId) {
+          <tr>
+            <td><a [routerLink]="['/books', item.bookId]">{{ item.title }}</a></td>
+            <td>{{ item.unitPrice | currency }}</td>
+            <td>
+              <input
+                type="number"
+                min="1"
+                [ngModel]="item.quantity"
+                (ngModelChange)="updateQty(item.bookId, $event)"
+              />
+            </td>
+            <td>{{ item.unitPrice * item.quantity | currency }}</td>
+            <td><button type="button" (click)="remove(item.bookId)">Remove</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <p class="subtotal"><strong>Subtotal:</strong> {{ subtotal | currency }}</p>
+    <button type="button" (click)="checkout()">Checkout</button>
+  }
+</section>

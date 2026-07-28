@@ -1,0 +1,30 @@
+<section>
+  <h1>Checkout</h1>
+  <p><a routerLink="/cart">← Back to cart</a></p>
+
+  @if (items.length === 0) {
+    <p>Nothing to checkout. <a routerLink="/">Browse books</a></p>
+  } @else {
+    <ul>
+      @for (item of items; track item.bookId) {
+        <li>
+          {{ item.title }} × {{ item.quantity }} — {{ item.unitPrice * item.quantity | currency }}
+        </li>
+      }
+    </ul>
+    <p><strong>Total:</strong> {{ subtotal | currency }}</p>
+
+    <label>
+      Card last 4 digits
+      <input [(ngModel)]="cardLast4" maxlength="4" pattern="[0-9]{4}" />
+    </label>
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <button type="button" (click)="placeOrderAndPay()" [disabled]="loading">
+      {{ loading ? 'Processing…' : 'Place order & pay' }}
+    </button>
+  }
+</section>

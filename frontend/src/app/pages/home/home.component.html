@@ -1,0 +1,44 @@
+<section>
+  <h1>Books</h1>
+
+  <form class="search" (ngSubmit)="search()">
+    <input [(ngModel)]="keyword" name="keyword" placeholder="Search title or author" />
+    <button type="submit">Search</button>
+  </form>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+  @if (loading) {
+    <p>Loading…</p>
+  } @else if (books.length === 0) {
+    <p>No books found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of books; track book.id) {
+          <tr>
+            <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
+            <td>{{ book.authorName }}</td>
+            <td>{{ book.price | currency }}</td>
+            <td>{{ book.stock }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pager">
+      <button type="button" (click)="prev()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} / {{ totalPages || 1 }} ({{ totalElements }} books)</span>
+      <button type="button" (click)="next()" [disabled]="page + 1 >= totalPages">Next</button>
+    </div>
+  }
+</section>

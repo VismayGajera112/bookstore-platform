@@ -1,0 +1,40 @@
+<section>
+  <h1>Order</h1>
+  <p><a routerLink="/">Continue shopping</a></p>
+
+  @if (payHint) {
+    <p class="warn">Payment may have failed — see status below.</p>
+  }
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+  @if (loading) {
+    <p>Loading…</p>
+  }
+  @if (order) {
+    <p><strong>Order #{{ order.id }}</strong></p>
+    <p>Status: {{ order.status }}</p>
+    <p>Total: {{ order.totalAmount | currency }}</p>
+    @if (order.statusReason) {
+      <p>Reason: {{ order.statusReason }}</p>
+    }
+
+    <h2>Items</h2>
+    <ul>
+      @for (item of order.items; track item.bookId) {
+        <li>
+          {{ item.bookTitle }} × {{ item.quantity }} — {{ item.lineTotal | currency }}
+        </li>
+      }
+    </ul>
+
+    @if (payment) {
+      <h2>Payment</h2>
+      <p>Status: {{ payment.status }}</p>
+      <p>Amount: {{ payment.amount | currency }}</p>
+      @if (payment.failureReason) {
+        <p class="error">{{ payment.failureReason }}</p>
+      }
+    }
+  }
+</section>

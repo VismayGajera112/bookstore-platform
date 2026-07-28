@@ -1,0 +1,11 @@
+.error {
+  color: #b00020;
+}
+
+.warn {
+  color: #8a5a00;
+}
+
+ul {
+  padding-left: 1.25rem;
+}

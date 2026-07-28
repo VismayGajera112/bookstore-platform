@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+input[type='number'] {
+  width: 4rem;
+  padding: 0.25rem;
+}
+
+.subtotal {
+  margin: 1rem 0;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}

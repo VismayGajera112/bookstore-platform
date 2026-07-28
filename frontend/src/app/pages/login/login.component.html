@@ -1,0 +1,18 @@
+<section class="panel">
+  <h1>Login</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Username
+      <input formControlName="username" autocomplete="username" />
+    </label>
+    <label>
+      Password
+      <input type="password" formControlName="password" autocomplete="current-password" />
+    </label>
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+    <button type="submit" [disabled]="loading">{{ loading ? 'Signing in…' : 'Sign in' }}</button>
+  </form>
+  <p class="hint">No account? <a routerLink="/register">Register</a></p>
+</section>

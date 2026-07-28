@@ -1,0 +1,37 @@
+<section>
+  <p><a routerLink="/">← Back to books</a></p>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+  @if (loading) {
+    <p>Loading…</p>
+  }
+  @if (book) {
+    <div class="detail">
+      @if (coverIsHttp) {
+        <img [src]="book.coverUrl!" [alt]="book.title" class="cover" />
+      }
+      <div>
+        <h1>{{ book.title }}</h1>
+        <p>by {{ book.authorName }}</p>
+        <p>Price: {{ book.price | currency }}</p>
+        <p>Stock: {{ book.stock }}</p>
+        @if (book.isbn) {
+          <p>ISBN: {{ book.isbn }}</p>
+        }
+
+        <div class="actions">
+          <label>
+            Qty
+            <input type="number" [(ngModel)]="quantity" min="1" [max]="book.stock || 99" />
+          </label>
+          <button type="button" (click)="addToCart()" [disabled]="book.stock < 1">Add to cart</button>
+        </div>
+        @if (message) {
+          <p class="ok">{{ message }} <a routerLink="/cart">View cart</a></p>
+        }
+      </div>
+    </div>
+  }
+</section>
