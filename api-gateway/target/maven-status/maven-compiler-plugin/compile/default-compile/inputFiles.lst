@@ -1,3 +1,4 @@
 /Users/vismaygajera/Desktop/Antra/bookstore-platform/api-gateway/src/main/java/com/example/gateway/config/GatewayJwtConfig.java
+/Users/vismaygajera/Desktop/Antra/bookstore-platform/api-gateway/src/main/java/com/example/gateway/config/GatewaySecurityConfig.java
 /Users/vismaygajera/Desktop/Antra/bookstore-platform/api-gateway/src/main/java/com/example/gateway/GatewayApplication.java
 /Users/vismaygajera/Desktop/Antra/bookstore-platform/api-gateway/src/main/java/com/example/gateway/filter/JwtValidationFilter.java

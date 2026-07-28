@@ -1,3 +1,4 @@
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -7,45 +8,10 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.5)
 
-2026-07-28T11:03:19.763-04:00  INFO 42795 --- [book-service] [           main] c.example.book.BookServiceApplication    : Starting BookServiceApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 42795 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/book-service/target/book-service-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
-2026-07-28T11:03:19.770-04:00  INFO 42795 --- [book-service] [           main] c.example.book.BookServiceApplication    : No active profile set, falling back to 1 default profile: "default"
-2026-07-28T11:03:19.887-04:00  INFO 42795 --- [book-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
-2026-07-28T11:03:19.887-04:00  INFO 42795 --- [book-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=book-service, profiles=[default], label=null, version=null, state=null
-2026-07-28T11:03:21.900-04:00  INFO 42795 --- [book-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-07-28T11:03:22.122-04:00  INFO 42795 --- [book-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 214 ms. Found 3 JPA repository interfaces.
-2026-07-28T11:03:22.634-04:00  INFO 42795 --- [book-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ba5aa205-31ba-327e-b18b-392b42355ab5
-2026-07-28T11:03:23.975-04:00  INFO 42795 --- [book-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
-2026-07-28T11:03:24.006-04:00  INFO 42795 --- [book-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-07-28T11:03:24.013-04:00  INFO 42795 --- [book-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2026-07-28T11:03:24.164-04:00  INFO 42795 --- [book-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-07-28T11:03:24.179-04:00  INFO 42795 --- [book-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4281 ms
-2026-07-28T11:03:24.928-04:00  INFO 42795 --- [book-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-07-28T11:03:25.327-04:00  INFO 42795 --- [book-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4fa8297b
-2026-07-28T11:03:25.328-04:00  INFO 42795 --- [book-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-07-28T11:03:25.501-04:00  INFO 42795 --- [book-service] [           main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 9.22.3 by Redgate
-2026-07-28T11:03:25.501-04:00  INFO 42795 --- [book-service] [           main] o.f.c.internal.license.VersionPrinter    : See release notes here: https://rd.gt/416ObMi
-2026-07-28T11:03:25.501-04:00  INFO 42795 --- [book-service] [           main] o.f.c.internal.license.VersionPrinter    : 
-2026-07-28T11:03:25.516-04:00  INFO 42795 --- [book-service] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:5434/book_db (PostgreSQL 15.18)
-2026-07-28T11:03:25.560-04:00  INFO 42795 --- [book-service] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.022s)
-2026-07-28T11:03:25.625-04:00  INFO 42795 --- [book-service] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 2
-2026-07-28T11:03:25.628-04:00  INFO 42795 --- [book-service] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
-2026-07-28T11:03:25.832-04:00  INFO 42795 --- [book-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-07-28T11:03:25.876-04:00  INFO 42795 --- [book-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2026-07-28T11:03:25.893-04:00  INFO 42795 --- [book-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-07-28T11:03:26.285-04:00  INFO 42795 --- [book-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-07-28T11:03:28.152-04:00  INFO 42795 --- [book-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-07-28T11:03:28.191-04:00  INFO 42795 --- [book-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-07-28T11:03:28.776-04:00  INFO 42795 --- [book-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-07-28T11:03:29.939-04:00  WARN 42795 --- [book-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: d77bf01b-f19c-4a67-a2f5-038ea86fc579
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-07-28T11:03:30.575-04:00  INFO 42795 --- [book-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 5 endpoint(s) beneath base path '/actuator'
-2026-07-28T11:03:30.690-04:00  INFO 42795 --- [book-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2e3fe830, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37095cad, org.springframework.security.web.context.SecurityContextHolderFilter@6873c7e6, org.springframework.security.web.header.HeaderWriterFilter@3b057816, org.springframework.web.filter.CorsFilter@2e2662d8, org.springframework.security.web.authentication.logout.LogoutFilter@4bea0314, com.example.common.security.JwtAuthenticationFilter@14dbfdb1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@29963f9a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5a22eec0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5dd1526e, org.springframework.security.web.session.SessionManagementFilter@7589cfc4, org.springframework.security.web.access.ExceptionTranslationFilter@6cc1da7b, org.springframework.security.web.access.intercept.AuthorizationFilter@6c988822]
-2026-07-28T11:03:31.213-04:00  INFO 42795 --- [book-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
-2026-07-28T11:03:31.244-04:00  INFO 42795 --- [book-service] [           main] c.example.book.BookServiceApplication    : Started BookServiceApplication in 14.11 seconds (process running for 15.149)
-2026-07-28T11:03:31.652-04:00  INFO 42795 --- [book-service] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-28T11:03:31.652-04:00  INFO 42795 --- [book-service] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-07-28T11:03:31.654-04:00  INFO 42795 --- [book-service] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-28T14:40:55.730-04:00  INFO 64670 --- [book-service] [           main] c.example.book.BookServiceApplication    : Starting BookServiceApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 64670 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/book-service/target/book-service-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
+2026-07-28T14:40:55.731-04:00  INFO 64670 --- [book-service] [           main] c.example.book.BookServiceApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-07-28T14:40:56.223-04:00  INFO 64670 --- [book-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2026-07-28T14:40:56.224-04:00  INFO 64670 --- [book-service] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=book-service, profiles=[default], label=null, version=null, state=null
+2026-07-28T14:40:59.163-04:00  INFO 64670 --- [book-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-28T14:40:59.221-04:00  INFO 64670 --- [book-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 3 JPA repository interfaces.
+2026-07-28T14:41:00.092-04:00  INFO 64670 --- [book-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2e37a3c6-0691-38cc-9e92-67fcdc4c3e2b

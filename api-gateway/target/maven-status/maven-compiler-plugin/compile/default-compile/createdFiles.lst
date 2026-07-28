@@ -1,3 +1,4 @@
 com/example/gateway/config/GatewayJwtConfig.class
 com/example/gateway/filter/JwtValidationFilter.class
 com/example/gateway/GatewayApplication.class
+com/example/gateway/config/GatewaySecurityConfig.class
