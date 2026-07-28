@@ -1,0 +1,14 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/user_db}
+
+bookstore:
+  admin:
+    bootstrap-enabled: ${ADMIN_BOOTSTRAP_ENABLED:true}
+    username: ${ADMIN_USERNAME:admin}
+    email: ${ADMIN_EMAIL:admin@bookstore.local}
+    # Password must come from the environment — never commit a real value here.
+    password: ${ADMIN_PASSWORD}

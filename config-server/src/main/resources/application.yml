@@ -1,0 +1,30 @@
+server:
+  port: ${SERVER_PORT:8888}
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    # native = read a local folder of YAML files. Switch to the default (git) profile in real
+    # environments by pointing spring.cloud.config.server.git.uri at a Git repository.
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          # Keep config in the platform repo under ./config-repo.
+          # run-all.sh starts this app from the bookstore-platform root, so this relative path is stable.
+          search-locations: file:./config-repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.config: INFO

@@ -1,0 +1,20 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-07-28T10:33:44.876-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Starting ConfigServerApplication v1.0.0-SNAPSHOT using Java 17.0.13 with PID 39226 (/Users/vismaygajera/Desktop/Antra/bookstore-platform/config-server/target/config-server-1.0.0-SNAPSHOT.jar started by vismaygajera in /Users/vismaygajera/Desktop/Antra/bookstore-platform)
+2026-07-28T10:33:44.879-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : The following 1 profile is active: "native"
+2026-07-28T10:33:45.430-04:00  INFO 39226 --- [config-server] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=efaa556a-801e-33ac-a6e3-fac140a4f246
+2026-07-28T10:33:45.549-04:00  INFO 39226 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2026-07-28T10:33:45.554-04:00  INFO 39226 --- [config-server] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-28T10:33:45.554-04:00  INFO 39226 --- [config-server] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-07-28T10:33:45.572-04:00  INFO 39226 --- [config-server] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-28T10:33:45.572-04:00  INFO 39226 --- [config-server] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 647 ms
+2026-07-28T10:33:45.965-04:00  INFO 39226 --- [config-server] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-07-28T10:33:45.997-04:00  INFO 39226 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path ''
+2026-07-28T10:33:46.020-04:00  INFO 39226 --- [config-server] [           main] c.e.config.ConfigServerApplication       : Started ConfigServerApplication in 1.427 seconds (process running for 1.667)

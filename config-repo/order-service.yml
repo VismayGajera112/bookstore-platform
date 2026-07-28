@@ -1,0 +1,63 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5435/order_db}
+  cloud:
+    openfeign:
+      client:
+        config:
+          book-service:
+            # Explicit and short. A hung dependency otherwise holds a thread here too.
+            connectTimeout: 1000
+            readTimeout: 2000
+            loggerLevel: basic
+
+bookstore:
+  clients:
+    book-service:
+      url: ${BOOK_SERVICE_URL:http://localhost:8082}
+  saga:
+    stock-release-retry-interval: ${STOCK_RELEASE_RETRY_INTERVAL:30000}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      bookService:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+        recordExceptions:
+          - com.example.order.exception.CatalogUnavailableException
+        ignoreExceptions:
+          - com.example.common.exception.InsufficientStockException
+          - com.example.common.exception.BusinessRuleException
+          - com.example.common.exception.ResourceNotFoundException
+  retry:
+    instances:
+      bookService:
+        maxAttempts: 3
+        waitDuration: 200ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - com.example.order.exception.CatalogUnavailableException
+        ignoreExceptions:
+          - com.example.common.exception.InsufficientStockException
+          - com.example.common.exception.BusinessRuleException
+          - com.example.common.exception.ResourceNotFoundException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers,circuitbreakerevents,retries,refresh,env
+  health:
+    circuitbreakers:
+      enabled: true

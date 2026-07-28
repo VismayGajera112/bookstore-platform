@@ -1,0 +1,48 @@
+# Shared defaults applied to every microservice (merged under application.yml on the Config Server).
+# Per-service files override these. Secrets stay as ${ENV_VAR} placeholders — never plain passwords.
+
+bookstore:
+  jwt:
+    # user-service signs; every other service verifies with the same secret + issuer.
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION:1h}
+    issuer: bookstore-platform
+  # Refreshable demo property: edit this file, POST /actuator/refresh, watch /api/config/demo change.
+  demo:
+    message: "config loaded from config-server (v1)"
+
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  datasource:
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,refresh,env
+  endpoint:
+    health:
+      show-details: when-authorized
+    refresh:
+      # Lets an ADMIN re-pull central config without restarting the process.
+      enabled: true
+
+logging:
+  level:
+    com.example: INFO
+    org.springframework.cloud.config: INFO

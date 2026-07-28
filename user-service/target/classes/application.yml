@@ -1,0 +1,7 @@
+# Bootstrap only. Everything else — datasource, JWT, Feign, Resilience4j, logging — comes from
+# config-server on startup (see config-repo/). Secrets still arrive as environment variables.
+spring:
+  application:
+    name: user-service
+  config:
+    import: "configserver:${CONFIG_SERVER_URL:http://localhost:8888}"

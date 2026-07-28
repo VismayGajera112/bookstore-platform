@@ -1,0 +1,62 @@
+server:
+  port: ${SERVER_PORT:8084}
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5436/payment_db}
+  cloud:
+    openfeign:
+      client:
+        config:
+          order-service:
+            connectTimeout: 1000
+            readTimeout: 2000
+            loggerLevel: basic
+
+bookstore:
+  clients:
+    order-service:
+      url: ${ORDER_SERVICE_URL:http://localhost:8083}
+  saga:
+    payment-redelivery-interval: ${PAYMENT_REDELIVERY_INTERVAL:30000}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+        recordExceptions:
+          - com.example.payment.exception.OrderServiceUnavailableException
+        ignoreExceptions:
+          - com.example.common.exception.BusinessRuleException
+          - com.example.common.exception.ResourceNotFoundException
+          - org.springframework.security.access.AccessDeniedException
+  retry:
+    instances:
+      orderService:
+        maxAttempts: 3
+        waitDuration: 200ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - com.example.payment.exception.OrderServiceUnavailableException
+        ignoreExceptions:
+          - com.example.common.exception.BusinessRuleException
+          - com.example.common.exception.ResourceNotFoundException
+          - org.springframework.security.access.AccessDeniedException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers,refresh,env
+  health:
+    circuitbreakers:
+      enabled: true
