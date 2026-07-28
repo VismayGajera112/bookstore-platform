@@ -12,6 +12,10 @@ bookstore:
     message: "config loaded from config-server (v1)"
 
 spring:
+  kafka:
+    # Shared by every producer and consumer; per-service files add the (de)serializer and
+    # consumer-group settings that only make sense on one side of the wire.
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
   jpa:
     open-in-view: false
     hibernate:
@@ -34,13 +38,28 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,refresh,env
+        # health/info for probes; prometheus for scraping; metrics/refresh/env stay ADMIN-gated in SecurityConfig.
+        include: health,info,metrics,prometheus,refresh,env
   endpoint:
     health:
       show-details: when-authorized
+      # Exposes /actuator/health/liveness and /readiness for Docker/K8s probes.
+      probes:
+        enabled: true
     refresh:
       # Lets an ADMIN re-pull central config without restarting the process.
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99
+  observations:
+    key-values:
+      application: ${spring.application.name}
 
 logging:
   level:

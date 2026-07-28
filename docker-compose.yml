@@ -393,6 +393,42 @@ services:
       retries: 12
       start_period: 60s
 
+  # --- Monitoring (Micrometer → Prometheus → Grafana) ---
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: bookstore-prometheus
+    profiles: ["monitoring"]
+    depends_on:
+      - api-gateway
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+
+  grafana:
+    image: grafana/grafana:11.0.0
+    container_name: bookstore-grafana
+    profiles: ["monitoring"]
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+
 volumes:
   user-pgdata:
   book-pgdata:
@@ -402,3 +438,5 @@ volumes:
   analytics-pgdata:
   kafka-data:
   localstack-data:
+  prometheus-data:
+  grafana-data:

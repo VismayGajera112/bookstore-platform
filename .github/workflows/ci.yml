@@ -1,0 +1,175 @@
+# Build → test → image → push → deploy (staging auto, prod gated).
+# Failing tests fail the pipeline. Images are tagged with the commit SHA and :latest on main.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  JAVA_VERSION: "17"
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/${{ github.repository }}
+
+jobs:
+  build-and-test:
+    name: Build & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: temurin
+          cache: maven
+
+      - name: Maven verify (compile + tests)
+        # A failing unit/integration test fails the job and blocks image publish.
+        run: mvn -B verify
+
+      - name: Upload surefire reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: "**/target/surefire-reports/"
+          if-no-files-found: ignore
+
+  build-and-push-images:
+    name: Build & push images
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - config-server
+          - user-service
+          - book-service
+          - order-service
+          - payment-service
+          - notification-service
+          - analytics-service
+          - api-gateway
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}
+          tags: |
+            type=sha,prefix=,format=short
+            type=raw,value=${{ github.sha }}
+            type=raw,value=latest
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.service }}/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  deploy-staging:
+    name: Deploy staging
+    needs: build-and-push-images
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.bookstore.example.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to staging (kubectl set image)
+        env:
+          SHA: ${{ github.sha }}
+          IMAGE_PREFIX: ${{ env.IMAGE_PREFIX }}
+        run: |
+          # Designed for a kubeconfig stored as a GitHub Actions secret (STAGING_KUBECONFIG).
+          # When the secret is absent, this job documents the deploy command and exits successfully
+          # so the pipeline still proves the image-publish path end-to-end.
+          if [ -z "${{ secrets.STAGING_KUBECONFIG }}" ]; then
+            echo "::notice::STAGING_KUBECONFIG not configured — printing deploy plan only"
+            echo "Would run:"
+            for svc in config-server user-service book-service order-service payment-service \
+                       notification-service analytics-service api-gateway; do
+              echo "  kubectl -n bookstore set image deploy/${svc} ${svc}=${IMAGE_PREFIX}/${svc}:${SHA}"
+            done
+            echo "  kubectl -n bookstore rollout status deploy/api-gateway"
+            exit 0
+          fi
+          echo "${{ secrets.STAGING_KUBECONFIG }}" | base64 -d > kubeconfig
+          export KUBECONFIG=$PWD/kubeconfig
+          for svc in config-server user-service book-service order-service payment-service \
+                     notification-service analytics-service api-gateway; do
+            kubectl -n bookstore set image "deploy/${svc}" "${svc}=${IMAGE_PREFIX}/${svc}:${SHA}"
+          done
+          kubectl -n bookstore rollout status deploy/api-gateway --timeout=300s
+
+  deploy-production:
+    name: Deploy production (manual approval)
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    # Configure a GitHub Environment named "production" with required reviewers —
+    # that is the manual approval gate before prod.
+    environment:
+      name: production
+      url: https://bookstore.example.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rolling deploy to production
+        env:
+          SHA: ${{ github.sha }}
+          IMAGE_PREFIX: ${{ env.IMAGE_PREFIX }}
+        run: |
+          if [ -z "${{ secrets.PROD_KUBECONFIG }}" ]; then
+            echo "::notice::PROD_KUBECONFIG not configured — printing production deploy/rollback plan"
+            cat <<EOF
+          Production deploy (rolling):
+            kubectl -n bookstore set image deploy/api-gateway api-gateway=${IMAGE_PREFIX}/api-gateway:${SHA}
+            # …same for each service…
+            kubectl -n bookstore rollout status deploy/api-gateway --timeout=300s
+
+          Rollback path:
+            kubectl -n bookstore rollout undo deploy/api-gateway
+            kubectl -n bookstore rollout history deploy/api-gateway
+          EOF
+            exit 0
+          fi
+          echo "${{ secrets.PROD_KUBECONFIG }}" | base64 -d > kubeconfig
+          export KUBECONFIG=$PWD/kubeconfig
+          ./scripts/k8s-deploy.sh "${IMAGE_PREFIX}" "${SHA}"
+          ./scripts/k8s-smoke.sh

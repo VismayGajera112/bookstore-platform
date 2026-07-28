@@ -198,3 +198,12 @@ curl -fsS http://localhost:8080/actuator/health
 
 Kubernetes manifests live under `k8s/` (Deployments, Services, ConfigMap, Secret, probes, gateway HPA).
 See [docs/step-10-kubernetes.md](docs/step-10-kubernetes.md) for minikube/kind usage and the EKS + IRSA design note.
+
+## Step 11 — CI/CD & Monitoring
+
+- GitHub Actions: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — build → test → GHCR images (SHA tags) → staging deploy → **production (manual approval)**
+- Rollback: `./scripts/k8s-rollback.sh`
+- Actuator: health public; `/actuator/prometheus` for scrapers; other actuators ADMIN
+- Observability: `docker compose --profile monitoring up -d` → Prometheus `:9090`, Grafana `:3000`
+
+Details: [docs/step-11-cicd-monitoring.md](docs/step-11-cicd-monitoring.md)

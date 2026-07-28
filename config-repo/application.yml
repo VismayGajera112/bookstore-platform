@@ -38,7 +38,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,refresh,env
+        # health/info for probes; prometheus for scraping; metrics/refresh/env stay ADMIN-gated in SecurityConfig.
+        include: health,info,metrics,prometheus,refresh,env
   endpoint:
     health:
       show-details: when-authorized
@@ -48,6 +49,17 @@ management:
     refresh:
       # Lets an ADMIN re-pull central config without restarting the process.
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99
+  observations:
+    key-values:
+      application: ${spring.application.name}
 
 logging:
   level:

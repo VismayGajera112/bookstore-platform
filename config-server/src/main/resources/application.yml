@@ -20,12 +20,15 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,prometheus,metrics
   endpoint:
     health:
       show-details: always
       probes:
         enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name:config-server}
 
 logging:
   level:

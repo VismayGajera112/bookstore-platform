@@ -137,7 +137,8 @@ public class JwtValidationFilter implements GlobalFilter, Ordered {
 
     private boolean isActuatorHealth(String path) {
         return PATH_MATCHER.match("/actuator/health/**", path)
-                || PATH_MATCHER.match("/actuator/info", path);
+                || PATH_MATCHER.match("/actuator/info", path)
+                || PATH_MATCHER.match("/actuator/prometheus", path);
     }
 
     private boolean matchesAny(String path, String... patterns) {
