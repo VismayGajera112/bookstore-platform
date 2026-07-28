@@ -12,6 +12,24 @@ awslocal() { aws --endpoint-url="$ENDPOINT" "$@"; }
 echo "[localstack-init] Creating bookstore-covers bucket..."
 awslocal s3 mb s3://bookstore-covers 2>/dev/null || true
 
+# Allow anonymous GET so the Angular app can load covers in <img src> without signed URLs.
+awslocal s3api put-bucket-acl --bucket bookstore-covers --acl public-read 2>/dev/null || true
+awslocal s3api put-public-access-block \
+  --bucket bookstore-covers \
+  --public-access-block-configuration \
+  "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false" \
+  2>/dev/null || true
+awslocal s3api put-bucket-policy --bucket bookstore-covers --policy '{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "PublicReadCovers",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": ["s3:GetObject"],
+    "Resource": ["arn:aws:s3:::bookstore-covers/*"]
+  }]
+}' 2>/dev/null || true
+
 # Cost optimization: expire noncurrent / incomplete multipart uploads; transition nothing locally.
 # In real AWS this same lifecycle rule drops old cover versions after 90 days.
 awslocal s3api put-bucket-lifecycle-configuration \

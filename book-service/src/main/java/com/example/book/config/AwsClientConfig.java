@@ -11,6 +11,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
@@ -42,7 +43,11 @@ public class AwsClientConfig {
     public S3Presigner s3Presigner(AwsProperties props) {
         var builder = S3Presigner.builder().region(Region.of(props.region()));
         if (props.hasCustomEndpoint()) {
+            // Path-style URLs work from the host after rewriting localstack → localhost.
             builder.endpointOverride(URI.create(props.endpoint()))
+                    .serviceConfiguration(S3Configuration.builder()
+                            .pathStyleAccessEnabled(true)
+                            .build())
                     .credentialsProvider(localCredentials());
         } else {
             builder.credentialsProvider(DefaultCredentialsProvider.create());

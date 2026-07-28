@@ -1,0 +1,88 @@
+.panel {
+  max-width: 480px;
+}
+
+.header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.header-row h1 {
+  margin: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+input,
+select {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.5rem;
+  box-sizing: border-box;
+}
+
+.author-create {
+  display: flex;
+  gap: 0.5rem;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.author-create input {
+  flex: 1;
+  margin-top: 0;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.error {
+  color: #b00020;
+}
+
+.ok {
+  color: #1b5e20;
+}
+
+.hint {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.cover-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.cover-preview {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  display: block;
+  margin-bottom: 0.75rem;
+  background: #f0f0f0;
+}
+
+.file-label {
+  font-weight: 500;
+}
+
+.file-label input[type='file'] {
+  margin-top: 0.35rem;
+}

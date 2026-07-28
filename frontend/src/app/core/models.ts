@@ -25,6 +25,34 @@ export interface Book {
   createdAt: string;
 }
 
+export interface BookRequest {
+  title: string;
+  authorId: number;
+  isbn?: string | null;
+  price: number;
+  stock: number;
+  coverUrl?: string | null;
+}
+
+export interface Author {
+  id: number;
+  name: string;
+  createdAt: string;
+}
+
+export interface AuthorRequest {
+  name: string;
+}
+
+export interface CoverUploadResponse {
+  bookId: number;
+  uploadUrl: string;
+  objectKey: string;
+  method: string;
+  contentType: string;
+  expiresAt: string;
+}
+
 export interface Page<T> {
   content: T[];
   totalElements: number;

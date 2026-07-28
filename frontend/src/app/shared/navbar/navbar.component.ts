@@ -17,6 +17,7 @@ export class NavbarComponent {
   private readonly cart = inject(CartService);
 
   readonly user$ = this.auth.user$;
+  readonly isAdmin$ = this.auth.user$.pipe(map(() => this.auth.isAdmin));
   readonly cartCount$ = this.cart.items$.pipe(
     map((items) => items.reduce((sum, i) => sum + i.quantity, 0))
   );

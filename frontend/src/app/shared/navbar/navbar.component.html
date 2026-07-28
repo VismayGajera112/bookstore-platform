@@ -11,6 +11,9 @@
       }
     </a>
     @if (user$ | async; as user) {
+      @if (isAdmin$ | async) {
+        <a routerLink="/admin/books" routerLinkActive="active">Admin</a>
+      }
       <span class="user">{{ user.username }}</span>
       <button type="button" class="linkish" (click)="logout()">Logout</button>
     } @else {

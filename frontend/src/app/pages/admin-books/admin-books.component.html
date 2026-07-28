@@ -1,0 +1,67 @@
+<section>
+  <div class="header-row">
+    <h1>Admin — Catalog</h1>
+    <a routerLink="/admin/books/new" class="btn-primary">Add book</a>
+  </div>
+
+  <form class="search" (ngSubmit)="search()">
+    <input [(ngModel)]="keyword" name="keyword" placeholder="Search title or author" />
+    <button type="submit">Search</button>
+  </form>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+  @if (loading) {
+    <p>Loading…</p>
+  } @else if (books.length === 0) {
+    <p>No books found.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Cover</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of books; track book.id) {
+          <tr>
+            <td class="cover-cell">
+              @if (coverUrl(book); as src) {
+                <img [src]="src" [alt]="book.title" class="thumb" />
+              } @else {
+                <span class="thumb placeholder" aria-hidden="true"></span>
+              }
+            </td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.authorName }}</td>
+            <td>{{ book.price | currency }}</td>
+            <td>{{ book.stock }}</td>
+            <td class="actions">
+              <a [routerLink]="['/admin/books', book.id, 'edit']">Edit</a>
+              <button
+                type="button"
+                class="danger"
+                (click)="deleteBook(book)"
+                [disabled]="deletingId === book.id"
+              >
+                {{ deletingId === book.id ? 'Deleting…' : 'Delete' }}
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pager">
+      <button type="button" (click)="prev()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} / {{ totalPages || 1 }} ({{ totalElements }} books)</span>
+      <button type="button" (click)="next()" [disabled]="page + 1 >= totalPages">Next</button>
+    </div>
+  }
+</section>

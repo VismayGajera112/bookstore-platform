@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Book, Page } from '../models';
+import { Book, BookRequest, CoverUploadResponse, Page } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class BookApiService {
@@ -22,5 +22,22 @@ export class BookApiService {
 
   getById(id: number): Observable<Book> {
     return this.http.get<Book>(`${this.base}/${id}`);
+  }
+
+  create(body: BookRequest): Observable<Book> {
+    return this.http.post<Book>(this.base, body);
+  }
+
+  update(id: number, body: BookRequest): Observable<Book> {
+    return this.http.put<Book>(`${this.base}/${id}`, body);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/${id}`);
+  }
+
+  requestCoverUpload(id: number, contentType: string): Observable<CoverUploadResponse> {
+    const params = new HttpParams().set('contentType', contentType);
+    return this.http.post<CoverUploadResponse>(`${this.base}/${id}/cover`, null, { params });
   }
 }

@@ -28,6 +28,41 @@ export class AuthService {
     return !!this.token;
   }
 
+  get isAdmin(): boolean {
+    const fromUser = this.normalizeRole(this.currentUser?.role);
+    if (fromUser === 'ADMIN') {
+      return true;
+    }
+    // Fallback: role claim in JWT (handles stale/missing localStorage user).
+    return this.normalizeRole(this.roleFromToken()) === 'ADMIN';
+  }
+
+  /** Normalize ROLE_ADMIN / admin → ADMIN. */
+  private normalizeRole(role: string | null | undefined): string | null {
+    if (!role) {
+      return null;
+    }
+    const upper = role.trim().toUpperCase();
+    return upper.startsWith('ROLE_') ? upper.slice(5) : upper;
+  }
+
+  private roleFromToken(): string | null {
+    const token = this.token;
+    if (!token) {
+      return null;
+    }
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) {
+        return null;
+      }
+      const json = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+      return typeof json.role === 'string' ? json.role : null;
+    } catch {
+      return null;
+    }
+  }
+
   register(username: string, email: string, password: string): Observable<User> {
     return this.http.post<User>(`${environment.apiBaseUrl}/api/auth/register`, {
       username,

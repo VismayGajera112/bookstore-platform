@@ -57,8 +57,8 @@ public class CoverService {
         int expirySeconds = awsProperties.s3().uploadUrlExpirySeconds();
         Instant expiresAt = Instant.now().plusSeconds(expirySeconds);
 
-        // Point the catalog at the expected object location before processing finishes.
-        String publicRef = "s3://" + awsProperties.s3().coverBucket() + "/" + objectKey;
+        // Browser-reachable URL for LocalStack; s3:// for real AWS (clients use signed GET / CDN).
+        String publicRef = publicCoverUrl(objectKey);
         book.setCoverUrl(publicRef);
         bookRepository.save(book);
 
@@ -73,10 +73,11 @@ public class CoverService {
                 .putObjectRequest(objectRequest)
                 .build());
 
+        String uploadUrl = browserReachableUrl(presigned.url().toString());
         log.info("Issued cover upload URL for bookId={} key={} expiresAt={}", bookId, objectKey, expiresAt);
         return new CoverUploadResponse(
                 bookId,
-                presigned.url().toString(),
+                uploadUrl,
                 objectKey,
                 "PUT",
                 resolvedType,
@@ -117,6 +118,24 @@ public class CoverService {
     private static String stringAttr(Map<String, AttributeValue> item, String name) {
         AttributeValue value = item.get(name);
         return value == null ? null : value.s();
+    }
+
+    private String publicCoverUrl(String objectKey) {
+        String bucket = awsProperties.s3().coverBucket();
+        if (awsProperties.hasCustomEndpoint()) {
+            // Browser loads from the host; rewrite Docker DNS "localstack" → "localhost".
+            String endpoint = awsProperties.endpoint().replaceAll("/$", "")
+                    .replace("://localstack:", "://localhost:");
+            return endpoint + "/" + bucket + "/" + objectKey;
+        }
+        return "s3://" + bucket + "/" + objectKey;
+    }
+
+    /** Host-side clients cannot resolve Docker DNS "localstack"; map to localhost. */
+    private static String browserReachableUrl(String url) {
+        return url
+                .replace("://localstack:", "://localhost:")
+                .replace(".localstack:", ".localhost:");
     }
 
     private static String extensionFor(String contentType) {

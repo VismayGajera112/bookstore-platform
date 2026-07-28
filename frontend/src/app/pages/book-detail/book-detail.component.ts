@@ -6,6 +6,7 @@ import { BookApiService } from '../../core/api/book-api.service';
 import { CartService } from '../../core/cart/cart.service';
 import { Book } from '../../core/models';
 import { apiErrorMessage } from '../../shared/api-error';
+import { coverImageUrl } from '../../shared/cover-url';
 
 @Component({
   selector: 'app-book-detail',
@@ -44,9 +45,8 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
-  get coverIsHttp(): boolean {
-    const url = this.book?.coverUrl;
-    return !!url && (url.startsWith('http://') || url.startsWith('https://'));
+  get displayCoverUrl(): string | null {
+    return coverImageUrl(this.book?.coverUrl);
   }
 
   addToCart(): void {

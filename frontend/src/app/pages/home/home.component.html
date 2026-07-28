@@ -17,6 +17,7 @@
     <table>
       <thead>
         <tr>
+          <th>Cover</th>
           <th>Title</th>
           <th>Author</th>
           <th>Price</th>
@@ -26,6 +27,13 @@
       <tbody>
         @for (book of books; track book.id) {
           <tr>
+            <td class="cover-cell">
+              @if (coverUrl(book); as src) {
+                <img [src]="src" [alt]="book.title" class="thumb" />
+              } @else {
+                <span class="thumb placeholder" aria-hidden="true"></span>
+              }
+            </td>
             <td><a [routerLink]="['/books', book.id]">{{ book.title }}</a></td>
             <td>{{ book.authorName }}</td>
             <td>{{ book.price | currency }}</td>

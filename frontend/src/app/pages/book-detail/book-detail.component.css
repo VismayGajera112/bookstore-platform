@@ -6,9 +6,14 @@
 
 .cover {
   width: 180px;
-  height: auto;
+  height: 270px;
   object-fit: cover;
   border: 1px solid #ddd;
+  background: #f0f0f0;
+}
+
+.cover.placeholder {
+  display: block;
 }
 
 .actions {

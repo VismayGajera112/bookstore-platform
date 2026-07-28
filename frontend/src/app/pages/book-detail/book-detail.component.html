@@ -9,8 +9,10 @@
   }
   @if (book) {
     <div class="detail">
-      @if (coverIsHttp) {
-        <img [src]="book.coverUrl!" [alt]="book.title" class="cover" />
+      @if (displayCoverUrl; as src) {
+        <img [src]="src" [alt]="book.title" class="cover" />
+      } @else {
+        <div class="cover placeholder" aria-hidden="true"></div>
       }
       <div>
         <h1>{{ book.title }}</h1>

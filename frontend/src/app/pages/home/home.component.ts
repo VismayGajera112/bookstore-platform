@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { BookApiService } from '../../core/api/book-api.service';
 import { Book } from '../../core/models';
 import { apiErrorMessage } from '../../shared/api-error';
+import { coverImageUrl } from '../../shared/cover-url';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  coverUrl(book: Book): string | null {
+    return coverImageUrl(book.coverUrl);
   }
 
   search(): void {
