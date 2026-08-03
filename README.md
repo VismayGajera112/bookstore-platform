@@ -1,8 +1,4 @@
-# Bookstore Platform — Step 5 (Microservices Split)
-
-The monolith from Steps 1–4 is now four independently deployable Spring Boot services,
-each with its own PostgreSQL database. There are no shared tables and no cross-database
-foreign keys — if a service needs another's data, it calls that service over HTTP.
+# Bookstore Platform
 
 ```
 bookstore-platform/
@@ -184,7 +180,7 @@ curl localhost:8083/api/orders/$ORDER_ID -H "Authorization: Bearer $TOKEN"
 
 ## Step 9 — S3 / Lambda / DynamoDB
 
-See [docs/step-9-file-processing.md](docs/step-9-file-processing.md) for cover upload (S3 → Lambda →
+for cover upload (S3 → Lambda →
 DynamoDB → SNS) and user browsing history. LocalStack is included in `docker-compose.yml`.
 
 ## Step 10 — Containers & Kubernetes
@@ -197,7 +193,6 @@ curl -fsS http://localhost:8080/actuator/health
 ```
 
 Kubernetes manifests live under `k8s/` (Deployments, Services, ConfigMap, Secret, probes, gateway HPA).
-See [docs/step-10-kubernetes.md](docs/step-10-kubernetes.md) for minikube/kind usage and the EKS + IRSA design note.
 
 ## Step 11 — CI/CD & Monitoring
 
@@ -205,8 +200,6 @@ See [docs/step-10-kubernetes.md](docs/step-10-kubernetes.md) for minikube/kind u
 - Rollback: `./scripts/k8s-rollback.sh`
 - Actuator: health public; `/actuator/prometheus` for scrapers; other actuators ADMIN
 - Observability: `docker compose --profile monitoring up -d` → Prometheus `:9090`, Grafana `:3000`
-
-Details: [docs/step-11-cicd-monitoring.md](docs/step-11-cicd-monitoring.md)
 
 ## Frontend (Angular)
 
